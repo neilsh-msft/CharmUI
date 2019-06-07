@@ -1,0 +1,51 @@
+﻿<Page
+    x:Class="CharmUI.Videos"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CharmUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Button Content="Main Menu" Height="39" Margin="54,42,0,0" VerticalAlignment="Top" Width="150" Click="Button_Click"/>
+        <StackPanel Margin="30,100,0,0">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Width="250">
+                    <TextBlock Text="Format" Height="30"/>
+                    <RadioButton Content="Flash Video Format (FLV)" Tag="FLV" IsEnabled="False"/>
+                    <RadioButton Content="Audio Video Interleave (AVI)" Tag="AVI"/>
+                    <RadioButton Content="MP4" Tag="MP4"/>
+                    <RadioButton Content="Windows Media Video (WMV)" Tag="WMV"/>
+                    <RadioButton Content="MOV" Tag="MOV"/>
+                    <RadioButton Content="MPG" Tag="MPG"/>
+                    <RadioButton Content="3GP" Tag="3GP" IsEnabled="False"/>
+                    <RadioButton Content="RealVideo" Tag="RV" IsEnabled="False"/>
+                </StackPanel>
+                <StackPanel Width="250">
+                    <TextBlock Text="Resolution" HorizontalAlignment="Left" Height="30"/>
+                    <RadioButton Content="VGA (860x480)" Tag="VGA"/>
+                    <RadioButton Content="HD (1280x720)" Tag="HDTV"/>
+                    <RadioButton Content="FHD (1920x1080)" Tag="FHD"/>
+                    <RadioButton Content="2K (2048x1080)" Tag="2K"/>
+                    <RadioButton Content="QHD (2560x1440)" Tag="QHD"/>
+                    <RadioButton Content="4K (3840x2160)" Tag="4K-UHD"/>
+
+                </StackPanel>
+                <StackPanel Width="250">
+                    <TextBlock Text="Frame Rate" Height="30"/>
+                    <RadioButton Content="10 FPS" Tag="FPS10"/>
+                    <RadioButton Content="16 FPS" Tag="FPS16"/>
+                    <RadioButton Content="24 FPS" Tag="FPS24"/>
+                    <RadioButton Content="30 FPS" Tag="FPS30"/>
+                    <RadioButton Content="30 FPS" Tag="FPS60"/>
+                    <ToggleSwitch Header="Play Mode" OffContent="Once" OnContent="Continuous" Margin="0,40,0,0"/>
+
+                </StackPanel>
+            </StackPanel>
+            <Button Content="Play" Height="119" Width="660" FontSize="72"/>
+        </StackPanel>
+
+    </Grid>
+</Page>
