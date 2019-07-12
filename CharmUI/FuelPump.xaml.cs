@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -12,6 +13,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+
+using Windows.Devices.Custom;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -58,11 +61,10 @@ namespace CharmUI
 
         static readonly sUri[] MediaList =
             new[] {
-             new sUri ("MCUs     1920x1080 @30FPS", 1920, 1080, "file:///c:/Src/Robert/CharmUI/Media/10_MCUs_Everywhere_Revised_End_Card_SUBS_032818_15000kbps.mp4"),
-             new sUri ("Baking   1920x1080 @30FPS", 1920, 1080, "ms-appx:///baking%20-%20video.mp4"),
-             new sUri ("Keynote  1920x1080 @24FPS", 1920, 1080, "ms-appx:///Keynote_WindowsIoTNoVO_0322B.mp4"),
-             new sUri ("Tractor  1280x720  @30FPS", 1280, 720, "ms-appx:///PexelsVideos1560989.mp4"),
-             new sUri ("Seal     1920x1080 @24FPS", 1920, 1080, "ms-appx:///seal - video.mp4")
+             new sUri ("H264     1920x1080 @30FPS", 1920, 1080, "ms-appx:///Media/video-h264.mkv"),
+             new sUri ("H265     1920x1080 @30FPS", 1920, 1080, "ms-appx:///Media/video-hevc-h265.mkv"),
+             new sUri ("VP8      1920x1080 @30FPS", 1920, 1080, "ms-appx:///Media/video-vp8-webm.mkv"),
+             new sUri ("VP9      1920x1080 @30FPS", 1920, 1080, "ms-appx:///Media/video-vp9.mkv"),
             };
 
         struct sVid {
@@ -103,9 +105,12 @@ namespace CharmUI
             foreach (var l in MediaList)
                 VidList.Items.Add(l.Display);
 
+            VidList.SelectedIndex = 1;
+
             foreach (var s in VidFrameSize)
                 VidSize.Items.Add(s.Display);
-            VidSize.SelectedIndex = 0;
+            //            VidSize.SelectedIndex = 0;
+            VidSize.SelectedIndex = 2;
         }
 
         void DisplayDriver_TimerTick(object sender, object /*EventArgs*/ e)
@@ -259,13 +264,37 @@ namespace CharmUI
             PumpState = PumpStates.StateInitial;
         }
 
-        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        private async void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
             if (toggleSwitch != null)
             {
                 if (toggleSwitch.IsOn == true)
                 {
+                    try {
+/*
+                        Guid imxvpumft = new Guid("{ada9253b-628c-40ce-b2c1-19f489a0f3da}");
+                        string selector = CustomDevice.GetDeviceSelector(imxvpumft);
+                        var allMfts = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(selector);
+
+                        int c = allMfts.Count;
+                        foreach (var element in allMfts)
+                        {
+                            var id = element.Id;
+                            var name = element.Name;
+
+                            var device = await CustomDevice.FromIdAsync(id, DeviceAccessMode.ReadWrite, DeviceSharingMode.Shared);
+                            var ioctl = await device.SendIOControlAsync(new IOControlCode(0x47, 0, IOControlAccessMode.Any, IOControlBufferingMethod.Buffered), null, null);
+                        }
+*/
+
+//                  FileStream foo = File.Open("\\\\?\\ACPI#NXP0109#0#{ada9253b-628c-40ce-b2c1-19f489a0f3da}", FileMode.Open);
+//                  foo.Close();
+                    } catch (Exception ex)
+                    {
+                        MessageDialog error = new MessageDialog(ex.Message);
+                        await error.ShowAsync();
+                    }
                     if (VidList.SelectedIndex < 0)
                     {
                         toggleSwitch.IsOn = false;
@@ -282,8 +311,11 @@ namespace CharmUI
                             VidFrame.Height = MediaList[VidList.SelectedIndex].Height;
                             VidFrame.Width = MediaList[VidList.SelectedIndex].Width;
                         }
-                        VidFrame.Source = new System.Uri(MediaList[ VidList.SelectedIndex ].Uri);
-                        //VidFrame.Play();
+                        System.Uri source = new System.Uri(MediaList[ VidList.SelectedIndex ].Uri);
+                        VidFrame.MediaFailed += VidFrame_MediaFailed;
+                        VidFrame.Source = source;
+//                        VidFrame.AddVideoEffect("mft.mft0", true, null);
+                        VidFrame.Play();
                     }
                 }
                 else
@@ -291,6 +323,12 @@ namespace CharmUI
                     VidFrame.Stop();
                 }
             }
+        }
+
+        private async void VidFrame_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            MessageDialog error = new MessageDialog(e.ErrorMessage);
+            await error.ShowAsync();
         }
     }
 }

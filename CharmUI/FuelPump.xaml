@@ -37,6 +37,7 @@
                     </ScrollViewer>
                 </Canvas>
                 <MediaElement x:Name="VidFrame" Height="240" Width="320" Margin="10,0,0,0" Stretch="Uniform" AutoPlay="True" IsLooping="True"/>
+                <MediaPlayerElement x:Name="MediaFrame" Height="240" Width="320" Margin="10,0,0,0" Stretch="Uniform" AutoPlay="True" />
             </StackPanel>
         </StackPanel>
     </Grid>

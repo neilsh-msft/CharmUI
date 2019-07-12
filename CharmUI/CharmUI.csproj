@@ -135,6 +135,10 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Media\video-h264.mkv" />
+    <Content Include="Media\video-hevc-h265.mkv" />
+    <Content Include="Media\video-vp8-webm.mkv" />
+    <Content Include="Media\video-vp9.mkv" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
