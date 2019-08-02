@@ -63,6 +63,9 @@ namespace CharmUI
             new[] {
              new sUri ("H264     1920x1080 @30FPS", 1920, 1080, "ms-appx:///Media/video-h264.mkv"),
              new sUri ("H265     1920x1080 @30FPS", 1920, 1080, "ms-appx:///Media/video-hevc-h265.mkv"),
+             new sUri ("H265 pattern 320x200 @30FPS", 1920, 1080, "ms-appx:///Media/video-hevc-pattern.mkv"),
+             new sUri ("H265 yellow 320x200 @30FPS", 1920, 1080, "ms-appx:///Media/video-hevc-yellow.mkv"),
+             new sUri ("H265 white  320x200 @30FPS", 1920, 1080, "ms-appx:///Media/video-hevc-white.mkv"),
              new sUri ("VP8      1920x1080 @30FPS", 1920, 1080, "ms-appx:///Media/video-vp8-webm.mkv"),
              new sUri ("VP9      1920x1080 @30FPS", 1920, 1080, "ms-appx:///Media/video-vp9.mkv"),
             };
