@@ -25,6 +25,6 @@
   <Capabilities>
     <Capability Name="internetClient" />
     <iot:Capability Name="lowLevelDevices" />
-    <DeviceCapability Name="ada9253b-628c-40ce-b2c1-19f489a0f3da"/>
+    <!-- <DeviceCapability Name="ada9253b-628c-40ce-b2c1-19f489a0f3da"/> -->
   </Capabilities>
 </Package>

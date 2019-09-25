@@ -61,13 +61,18 @@ namespace CharmUI
 
         static readonly sUri[] MediaList =
             new[] {
-             new sUri ("H264     1920x1080 @30FPS", 1920, 1080, "ms-appx:///Media/video-h264.mkv"),
-             new sUri ("H265     1920x1080 @30FPS", 1920, 1080, "ms-appx:///Media/video-hevc-h265.mkv"),
-             new sUri ("H265 pattern 320x200 @30FPS", 1920, 1080, "ms-appx:///Media/video-hevc-pattern.mkv"),
-             new sUri ("H265 yellow 320x200 @30FPS", 1920, 1080, "ms-appx:///Media/video-hevc-yellow.mkv"),
-             new sUri ("H265 white  320x200 @30FPS", 1920, 1080, "ms-appx:///Media/video-hevc-white.mkv"),
-             new sUri ("VP8      1920x1080 @30FPS", 1920, 1080, "ms-appx:///Media/video-vp8-webm.mkv"),
-             new sUri ("VP9      1920x1080 @30FPS", 1920, 1080, "ms-appx:///Media/video-vp9.mkv"),
+             new sUri ("H264     1920x1080 @25FPS", 1920, 1080, "ms-appx:///Media/video-h264.mkv"),
+             new sUri ("H264     640x480 @25FPS", 640, 480, "ms-appx:///Media/video-h264-480p.mkv"),
+             new sUri ("H265     640x480 @25FPS", 640, 480, "ms-appx:///Media/video-hevc-480p.mkv"),
+             new sUri ("H265     1920x1080 @25FPS", 1920, 1080, "ms-appx:///Media/video-hevc-h265.mkv"),
+             new sUri ("H264 test bars 640x480 @25FPS", 640, 480, "ms-appx:///Media/video-hevc-pattern.mkv"),
+             new sUri ("H265 test bars 640x480 @25FPS", 640, 480, "ms-appx:///Media/video-h264-pattern.mkv"),
+             new sUri ("VP8  test bars 640x480 @25FPS", 640, 480, "ms-appx:///Media/video-vp8-pattern.mkv"),
+             new sUri ("VP9  test bars 640x480 @25FPS", 640, 480, "ms-appx:///Media/video-vp9-pattern.mkv"),
+             new sUri ("VP8      1920x1080 @25FPS", 1920, 1080, "ms-appx:///Media/video-vp8-webm.mkv"),
+             new sUri ("VP9      1920x1080 @25FPS", 1920, 1080, "ms-appx:///Media/video-vp9.mkv"),
+             new sUri ("H264 big_buck_bunny_480p_AAC_h264", 640, 480, "ms-appx:///Media/big_buck_bunny_480p_AAC_h264.mkv"),
+             new sUri ("H265 big_buck_bunny_480p_AAC_h265", 640, 480, "ms-appx:///Media/big_buck_bunny_480p_AAC_h265.mkv"),
             };
 
         struct sVid {
@@ -317,7 +322,12 @@ namespace CharmUI
                         System.Uri source = new System.Uri(MediaList[ VidList.SelectedIndex ].Uri);
                         VidFrame.MediaFailed += VidFrame_MediaFailed;
                         VidFrame.Source = source;
-//                        VidFrame.AddVideoEffect("mft.mft0", true, null);
+                        //                        VidFrame.AddVideoEffect("mft.mft0", true, null);
+                        VidFrame.AreTransportControlsEnabled = true;
+// Changing playback rate doesn't do anything on arm64 for H264 or H265 media :(
+//                        double rate = VidFrame.DefaultPlaybackRate;
+//                        rate = rate / 10;
+//                        VidFrame.PlaybackRate = rate;
                         VidFrame.Play();
                     }
                 }
